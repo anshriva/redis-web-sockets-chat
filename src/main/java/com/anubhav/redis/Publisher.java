@@ -1,31 +1,24 @@
 package com.anubhav.redis;
 
+import io.lettuce.core.RedisClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 @Component
 public class Publisher {
 
-    private JedisPool jedisPool;
+    RedisClient client;
 
     private static final Logger logger = LoggerFactory.getLogger(Publisher.class);
 
     public Publisher(){
-        this.jedisPool = new JedisPool(new JedisPoolConfig(),
-                "localhost",
-                6379,
-                30000
-        );
+        this.client = RedisClient.create("redis://localhost:6379");
     }
 
     public void publish(String channel, String message){
-        try (Jedis jedis = this.jedisPool.getResource()) {
-            logger.info("going to publish the message to channel {} and message = {}", channel, message);
-            jedis.publish(channel, message);
-        }
+        logger.info("going to publish the message to channel {} and message = {}", channel, message);
+        var connection = this.client.connect();
+        connection.sync().publish(channel,message);
     }
 }
