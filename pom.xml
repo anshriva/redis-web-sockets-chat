@@ -8,10 +8,10 @@
     <version>2.7.1</version>
 </parent>
 <groupId>com.anubhav</groupId>
-<artifactId>web-sockets</artifactId>
+<artifactId>web-sockets-redis-chat</artifactId>
 <version>0.0.1-SNAPSHOT</version>
-<name>web-sockets</name>
-<description>Demo for web sockets</description>
+<name>web-sockets-redis-chat</name>
+<description>Demo for web sockets with redis</description>
 <properties>
     <java.version>18</java.version>
 </properties>
@@ -20,13 +20,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-websocket</artifactId>
     </dependency>
-
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-test</artifactId>
-        <scope>test</scope>
-    </dependency>
-
     <dependency>
         <groupId>io.lettuce</groupId>
         <artifactId>lettuce-core</artifactId>
