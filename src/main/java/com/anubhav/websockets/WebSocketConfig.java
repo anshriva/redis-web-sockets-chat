@@ -38,11 +38,11 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public HandshakeInterceptor getParametersInterceptors() {
         return new HandshakeInterceptor() {
             public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
-                                           WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+                                           WebSocketHandler wsHandler, Map<String, Object> attributes) {
 
                 String path = request.getURI().getPath();
-                String channelId = WebSocketHelper.getChannelIdFromUrl(path);
-                attributes.put(WebSocketHelper.channelIdKey, channelId);
+                String userId = WebSocketHelper.getUserIdFromUrl(path);
+                attributes.put(WebSocketHelper.userIdKey, userId);
                 return true;
             }
 

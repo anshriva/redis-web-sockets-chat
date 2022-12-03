@@ -18,15 +18,13 @@ public class SubscriberHelper implements RedisPubSubListener<String, String> {
     }
     @Override
     public void message(String channel, String message) {
-        logger.info("got the message = "+ channel+ " and "+ message);
-        this.webSocketSessionManager.getWebSocketSessionByChannelId(channel).forEach(x -> {
-            try {
-                logger.info("going to send the message to websocket {}", x.getId());
-                x.sendMessage(new TextMessage("message = " + message));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        logger.info("got the message on redis "+ channel+ " and "+ message);
+        var ws = this.webSocketSessionManager.getWebSocketSessions(channel);
+        try {
+            ws.sendMessage(new TextMessage(message));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
